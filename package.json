@@ -1,0 +1,89 @@
+{
+  "author": {
+    "email": "dario@casertano.name",
+    "name": "Dario Casertano (DarCas)"
+  },
+  "bugs": {
+    "url": "https://github.com/DarCas/rollup-plugin-license-json/issues"
+  },
+  "dependencies": {
+    "rollup-plugin-license": "^3.5.3"
+  },
+  "description": "A Vite plugin to generate a JSON file with detailed information about third-party licenses, using rollup-plugin-license.",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.24.2",
+    "tshy": "^3.0.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    },
+    "./min": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.min.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.min.js"
+      }
+    }
+  },
+  "homepage": "https://github.com/DarCas/rollup-plugin-license-json",
+  "keywords": [
+    "json",
+    "license",
+    "plugin",
+    "rollup",
+    "rollup-plugin",
+    "vite",
+    "vite-plugin"
+  ],
+  "license": "MIT",
+  "main": "./dist/commonjs/index.js",
+  "name": "@darcas/rollup-plugin-license-json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DarCas/rollup-plugin-license-json"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist && tshy && rm -rf ./dist/node_modules && npm run cjs && npm run esm",
+    "cjs": "esbuild --minify --sourcemap --bundle dist/commonjs/index.js --outfile=dist/commonjs/index.min.js --format=cjs --platform=node",
+    "deploy": "npm run build && npm publish --access public",
+    "esm": "esbuild --minify --sourcemap --bundle dist/esm/index.js --outfile=dist/esm/index.min.js --format=esm --platform=node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "tshy": {
+    "exports": {
+      ".": "./src/index.ts",
+      "./min": {
+        "import": {
+          "types": "./dist/esm/index.d.ts",
+          "default": "./dist/esm/index.min.js"
+        },
+        "require": {
+          "types": "./dist/commonjs/index.d.ts",
+          "default": "./dist/commonjs/index.min.js"
+        }
+      }
+    }
+  },
+  "types": "./dist/commonjs/index.d.ts",
+  "typings": "./dist/commonjs/index.d.ts",
+  "version": "1.0.0",
+  "type": "module",
+  "module": "./dist/esm/index.js"
+}
