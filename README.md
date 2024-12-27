@@ -42,7 +42,13 @@ export default defineConfig({
     //...
     plugins: [
         //...
-        LicensePluginJson(join(__dirname, 'dist', 'licenses.json')),
+        LicensePluginJson(join(__dirname, 'dist', 'licenses.json'), {
+            debug: true,
+            thirdParty: {
+                includePrivate: true,
+                multipleVersions: true,
+            }
+        }),
         //...
     ],
     //...
@@ -51,11 +57,12 @@ export default defineConfig({
 
 ### Parameters
 
-`LicensePluginJson` accepts 3 parameters:
+`LicensePluginJson` accepts 2 parameters:
 
 - `file` *(string, required)*: The path where the JSON file will be generated.
-- `includePrivate` *(boolean, optional, default = ******`false`******)*: Whether to include private packages in the output.
-- `multipleVersions` *(boolean, optional, default = ******`false`******)*: Whether to allow multiple versions of the same dependency.
+- `options` *(object, optional)*: See the `rollup-plugin-license` plugin
+
+> You can't override the `thirdParty.output` option.
 
 ## Output
 
