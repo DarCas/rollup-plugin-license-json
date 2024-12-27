@@ -5,9 +5,7 @@
  */
 
 import type { Plugin } from 'rollup'
-import type { Dependency, Person } from 'rollup-plugin-license'
-
-const PluginLicense = require('rollup-plugin-license')
+import PluginLicense, { type Dependency, type Person } from 'rollup-plugin-license'
 
 export type LicensePluginJsonRecord = {
     readonly author: Person | null

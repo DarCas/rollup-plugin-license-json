@@ -4,16 +4,18 @@
     "declarationMap": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "inlineSources": true,
-    "jsx": "react",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "noUncheckedIndexedAccess": true,
-    "removeComments": true,
-    "resolveJsonModule": true,
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "dist",
     "skipLibCheck": true,
-    "sourceMap": true,
     "strict": true,
     "target": "ESNext"
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "src/**/*.ts"
+  ]
 }
