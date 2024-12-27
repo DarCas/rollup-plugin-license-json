@@ -11,7 +11,6 @@
   },
   "description": "A Vite plugin to generate a JSON file with detailed information about third-party licenses, using rollup-plugin-license.",
   "devDependencies": {
-    "@darcas/rollup-plugin-license-json": "^1.0.3",
     "@types/node": "^22.10.2",
     "terser": "^5.37.0",
     "typescript": "^5.7.2",
