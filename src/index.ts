@@ -31,7 +31,7 @@ export type LicensePluginJsonRecord = {
  * @param [options] - @see rollup-plugin-license
  * @returns {Plugin} - A Vite-compatible plugin instance.
  */
-export default function LicensePluginJson(file: string, options?: Options): Plugin {
+export default function LicensePluginJson(file: string, options?: Partial<Options>): Plugin {
     options = merge({}, {
         thirdParty: {
             includePrivate: false,
