@@ -1,12 +1,9 @@
-// noinspection JSUnusedGlobalSymbols
-
 /**
  * @author      Dario Casertano <dario@casertano.name>
- * @copyright   Copyright (c) 2024 Casertano Dario – All rights reserved.
+ * @copyright   Copyright (c) 2024-present Casertano Dario – All rights reserved.
  * @license     MIT
  */
 
-import merge from 'lodash.merge'
 import type { Plugin } from 'rollup'
 import PluginLicense, {
     type Dependency,
@@ -31,51 +28,53 @@ export type LicensePluginJsonRecord = {
  * @param [options] - @see rollup-plugin-license
  * @returns {Plugin} - A Vite-compatible plugin instance.
  */
-export default function LicensePluginJson(file: string, options?: Partial<Options>): Plugin {
-    options = merge({}, {
+export default function LicensePluginJson(file: string, options?: Options): Plugin {
+    const thirdParty = options?.thirdParty as ( Record<string, any> | undefined )
+
+    const plo: Options = {
+        banner: options?.banner,
+        cwd: options?.cwd,
+        debug: options?.debug ?? false,
+        sourcemap: options?.sourcemap ?? false,
         thirdParty: {
-            includePrivate: false,
-            includeSelf: true,
-            multipleVersions: false,
-        },
-    }, options)
+            allow: thirdParty?.allow,
+            includePrivate: thirdParty?.includePrivate,
+            includeSelf: thirdParty?.includeSelf ?? true,
+            multipleVersions: thirdParty?.multipleVersions,
+            output: {
+                encoding: 'utf-8',
+                file,
+                template: (dependencies: Dependency[]) => {
+                    const licenses = dependencies.map(dependency => {
+                        return {
+                            author: dependency.author,
+                            description: dependency.description,
+                            homepage: dependency.homepage,
+                            license: dependency.license,
+                            licenseText: ( (licenseText: string | null): string | null => {
+                                if (!licenseText || ( licenseText.trim() === '' )) {
+                                    return null
+                                }
 
-    options!.thirdParty = {
-        ...options!.thirdParty,
+                                licenseText = licenseText.replace(/<\/?[^>]+(>|$)/g, '')
+                                licenseText = licenseText.replace(/\n{2}\s*/g, '<br><br>')
+                                licenseText = licenseText.replace(/\n\s*/g, '<br>')
+                                licenseText = licenseText.replace(/\s+/g, ' ')
 
-        output: {
-            encoding: 'utf-8',
-            file,
-            template: (dependencies: Dependency[]) => {
-                const licenses = dependencies.map(dependency => {
-                    return {
-                        author: dependency.author,
-                        description: dependency.description,
-                        homepage: dependency.homepage,
-                        license: dependency.license,
-                        licenseText: ( (licenseText: string | null): string | null => {
-                            if (!licenseText || ( licenseText.trim() === '' )) {
-                                return null
-                            }
+                                return licenseText
+                            } )(dependency.licenseText),
+                            name: dependency.name,
+                            version: dependency.version,
+                        }
+                    })
 
-                            licenseText = licenseText.replace(/<\/?[^>]+(>|$)/g, '')
-                            licenseText = licenseText.replace(/\n{2}\s*/g, '<br><br>')
-                            licenseText = licenseText.replace(/\n\s*/g, '<br>')
-                            licenseText = licenseText.replace(/\s+/g, ' ')
-
-                            return licenseText
-                        } )(dependency.licenseText),
-                        name: dependency.name,
-                        version: dependency.version,
-                    }
-                })
-
-                return JSON.stringify(
-                    licenses.filter(({licenseText}) => !!licenseText),
-                )
+                    return JSON.stringify(
+                        licenses.filter(({licenseText}) => !!licenseText),
+                    )
+                },
             },
         },
     }
 
-    return PluginLicense(options)
+    return PluginLicense(plo)
 }
