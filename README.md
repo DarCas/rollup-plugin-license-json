@@ -2,7 +2,7 @@
 
 ![NPM Last Update](https://img.shields.io/npm/last-update/%40darcas%2Frollup-plugin-license-json)
 ![NPM Version](https://img.shields.io/npm/v/%40darcas%2Frollup-plugin-license-json)
-![NPM Downloads](https://img.shields.io/npm/dw/%40darcas%2Frollup-plugin-license-json)
+![NPM Downloads](https://img.shields.io/npm/dy/%40darcas%2Frollup-plugin-license-json)
 ![NPM License](https://img.shields.io/npm/l/%40darcas%2Frollup-plugin-license-json)
 
 `LicensePluginJson` is a Vite-compatible plugin that uses [rollup-plugin-license](https://github.com/mjeanroy/rollup-plugin-license) to generate a JSON file containing detailed information about third-party licenses in your project.
